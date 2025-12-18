@@ -13,7 +13,7 @@ dependencies = [
   "PyYAML"
 ]
 authors = [
-  { name="Your Name", email="you@example.com"},
+  { name="Raito Denki", email="arichichinoraitodenki@gmail.com"},
 ]
 
 [build-system]

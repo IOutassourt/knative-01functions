@@ -91,3 +91,6 @@ class Function:
         path /health/rediness.
         """
         return True, "Ready"
+
+if __name__ == "__main__":
+    (new())()
