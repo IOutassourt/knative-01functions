@@ -1,0 +1,78 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@2.1.1
+  docker: circleci/docker@2.4.0
+  pack: buildpacks/pack@0.2.0
+
+executors:
+  knative-python:
+    docker:
+      - image: cimg/python:3.11
+    working_directory: ~/project
+
+jobs:
+  test:
+    executor: knative-python
+    steps:
+      - checkout
+
+      - python/install-packages:
+          pkg-manager: pip
+          pip-dependency-file: requirements.txt
+
+      - run:
+          name: Run unit tests
+          command: |
+            if [ -d tests ]; then
+              pytest -v
+            else
+              echo "No tests directory, skipping"
+            fi
+
+  build-and-push:
+    docker:
+      - image: cimg/base:stable
+    environment:
+      IMAGE_NAME: knative-function
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run:
+          name: Install Knative func CLI
+          command: |
+            curl -L https://github.com/knative/func/releases/latest/download/func_linux_amd64 \
+              -o /usr/local/bin/func
+            chmod +x /usr/local/bin/func
+
+      - run:
+          name: Build function container
+          command: |
+            func build
+
+      - run:
+          name: Push image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login \
+              -u "$DOCKER_USERNAME" --password-stdin
+            func push
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - test
+      - build-and-push:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
+  main:
+    jobs:
+      - pack/build:
+          image-name: cefunctions
+          builder: 'paketobuildpacks/builder:base'
