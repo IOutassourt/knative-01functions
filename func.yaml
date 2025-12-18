@@ -1,0 +1,15 @@
+# $schema: https://raw.githubusercontent.com/knative/func/c9d4c54d/schema/func_yaml-schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/knative/func/c9d4c54d/schema/func_yaml-schema.json
+specVersion: 0.36.0
+name: ce-function
+runtime: python
+registry: docker.io/leradicator
+image: docker.io/leradicator/ce-function
+created: 2025-12-16T17:33:28.041335+01:00
+invoke: cloudevent
+build:
+  builderImages:
+    pack: heroku/builder:24
+  builder: pack
+deploy:
+  namespace: knative-dev
