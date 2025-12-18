@@ -1,1 +1,1 @@
-from .func import new
+from .func import new as new

@@ -7,8 +7,8 @@ use httpx for testing.  To run the tests using poetry:
 
 poetry run python -m unittest discover
 """
-import json
-import asyncio
+#import json
+#import asyncio
 import pytest
 from cloudevents.http import CloudEvent
 from function import new

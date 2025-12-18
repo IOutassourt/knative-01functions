@@ -4,6 +4,10 @@ from cloudevents.http import CloudEvent
 import hashlib
 import string
 
+import os
+import yaml
+import json
+
 ALPHABET = string.ascii_letters + string.digits  # base62
 
 def base62_encode(num: int) -> str:
@@ -21,9 +25,6 @@ def short_hash(data: bytes, length=10) -> str:
     n = int.from_bytes(h, "big")
     return base62_encode(n)[:length]
 
-import os
-import yaml
-import json
 
 def cloudevent_to_dict(event: CloudEvent) -> dict:
     return dict({

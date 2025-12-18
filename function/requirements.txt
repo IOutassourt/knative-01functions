@@ -1,5 +1,0 @@
-httpx
-cloudevents
-pytest
-pytest-asyncio
-PyYAML

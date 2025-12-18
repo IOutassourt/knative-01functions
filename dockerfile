@@ -21,4 +21,4 @@ COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/pytho
 WORKDIR /app
 
 # Define the entrypoint command
-CMD ["python3", "your_app.py"]
+CMD ["PORT=8080", "LISTEN_ADDRESS=127.0.0.1:8080", "python", "./service/main.py"]
