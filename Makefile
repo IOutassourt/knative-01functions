@@ -1,5 +1,5 @@
 build-pack:
-	pack build ce-function:pack --path . --builder heroku/builder:24
+	pack build ce-function:pack --path . --builder heroku/builder:24 --verbose
 
 build-alt:
 	pack build ce-function:alt --path . --builder heroku/builder:24 --platform linux/arm64

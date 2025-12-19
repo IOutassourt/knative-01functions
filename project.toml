@@ -1,3 +1,6 @@
+[_]
+schema-version = "0.2"
+
 [project]
 name = "function"
 description = ""
