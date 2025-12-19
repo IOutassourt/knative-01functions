@@ -1,0 +1,6 @@
+httpx
+cloudevents
+pytest
+pytest-asyncio
+PyYAML
+ruff>=0.14.10
