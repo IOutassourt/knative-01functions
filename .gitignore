@@ -1,6 +1,3 @@
-# ignore .func directory
-.func/
-
 # ignore build s2i directory
 
 *.s2i

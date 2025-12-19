@@ -1,8 +1,8 @@
 build-pack:
-	pack build ce-function:pack --path . --builder heroku/builder:24 --verbose
+	pack build leradicator/ce-function:pack --path . --builder heroku/builder:24 --verbose
 
 build-alt:
-	pack build ce-function:alt --path . --builder heroku/builder:24 --platform linux/arm64
+	pack build leradicator/ce-function:alt --path . --builder heroku/builder:24 --platform linux/arm64
 
 build-kn:
 	kn func build  --builder=pack --image leradicator/ce-function:kn --path . --builder-image=heroku/builder:24 --verbose #--platform linux/arm64
