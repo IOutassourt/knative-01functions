@@ -12,6 +12,14 @@ executors:
     working_directory: ~/project
 
 jobs:
+  picard_job:
+    docker:
+      - image: broadinstitute/picard:3.1.1
+    steps:
+      - checkout
+      - run:
+          name: Check Picard version
+          command: picard --version
   test:
     executor: knative-python
     steps:
@@ -71,6 +79,9 @@ workflows:
           filters:
             branches:
               only: main
+  picard_job:
+    jobs:
+      - picard_job
   main:
     jobs:
       - pack/build:
