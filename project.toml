@@ -28,7 +28,7 @@ build-backend = "hatchling.build"
 asyncio_mode = "strict"
 asyncio_default_fixture_loop_scope = "function"
 
-[tool.uv.workspace]
-members = [
-    "function",
-]
+#[tool.uv.workspace]
+#members = [
+#    "function",
+#]
