@@ -1,6 +1,10 @@
 # ignore .func directory
 .func/
 
+# ignore build s2i directory
+
+*.s2i
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

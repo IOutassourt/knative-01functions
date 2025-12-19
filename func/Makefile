@@ -5,7 +5,7 @@ build-alt:
 	pack build ce-function:alt --path . --builder heroku/builder:24 --platform linux/arm64
 
 build-kn:
-	func build --image leradicator/ce-function:kn --path .  --builder=pack --builder-image=heroku/builder:24 --verbose
+	kn func build  --builder=pack --image leradicator/ce-function:kn --path . --builder-image=heroku/builder:24 --verbose #--platform linux/arm64
 
 run:
 	docker run --rm -p 8080:8080 ce-function
