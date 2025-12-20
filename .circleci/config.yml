@@ -1,18 +1,83 @@
 version: 2.1
 
 orbs:
-  buildpacks: buildpacks/pack@0.2.0
+  python: circleci/python@2.1.1
+  docker: circleci/docker@2.4.0
+
+executors:
+  knative-python:
+    docker:
+      - image: cimg/python:3.11
+    working_directory: ~/project
 
 jobs:
-  build:
+  picard_job:
     docker:
-      - image: cimg/base:2024.01
+      - image: broadinstitute/picard:3.1.1
     steps:
       - checkout
-      - run: echo "Building with buildpacks"
+      - run:
+          name: Check Picard version
+          command: picard --version
+  test:
+    executor: knative-python
+    steps:
+      - checkout
+
+      - python/install-packages:
+          pkg-manager: pip
+          pip-dependency-file: requirements.txt
+
+      - run:
+          name: Run unit tests
+          command: |
+            if [ -d tests ]; then
+              pytest -v
+            else
+              echo "No tests directory, skipping"
+            fi
+
+  build-and-push:
+    docker:
+      - image: cimg/base:stable
+    environment:
+      IMAGE_NAME: knative-function
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run:
+          name: Install Knative func CLI
+          command: |
+            curl -L https://github.com/knative/func/releases/latest/download/func_linux_amd64 \
+              -o /usr/local/bin/func
+            chmod +x /usr/local/bin/func
+
+      - run:
+          name: Build function container
+          command: |
+            func build
+
+      - run:
+          name: Push image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login \
+              -u "$DOCKER_USERNAME" --password-stdin
+            func push
 
 workflows:
   version: 2
-  build_and_test:
+  build-test-deploy:
     jobs:
-      - build
+      - test
+      - build-and-push:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
+  picard_job:
+    jobs:
+      - picard_job
