@@ -1,8 +1,6 @@
 # Stage 1: Builder
 # Use a standard Python image with a shell and package manager for building
 FROM python:3.14-slim as python-env
-#FROM heroku/builder:24 as builder
-#FROM buildpacksio/pack:base as pack
 
 # ---- Environment ----
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -35,6 +33,10 @@ COPY . .
 # ---- Non-root user ----
 RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
+
+# ---- Function build ----
+FROM ghcr.io/knative/func
+RUN func build --builder=buildpacksio/pack:base --image leradicator/ce-function:kn --builder-image=heroku/builder:24 --verbose
 
 EXPOSE 8080
 
