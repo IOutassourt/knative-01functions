@@ -11,6 +11,6 @@ build:
   strategy: docker
   builderImages:
     pack: heroku/builder:24
-  builder: buildpacksio/pack:base
+  builder: pack
 deploy:
   namespace: knative-dev
