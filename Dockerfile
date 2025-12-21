@@ -27,7 +27,7 @@ WORKDIR /app
 # ---- Dependency layer (Tekton cache-friendly) ----
 COPY pyproject.toml poetry.lock* ./
 
-RUN poetry install --only main --no-root
+RUN pip install --no-cache-dir .
 
 # ---- App code ----
 COPY . .
