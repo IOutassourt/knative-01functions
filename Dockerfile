@@ -38,5 +38,8 @@ USER appuser
 
 EXPOSE 8080
 
+ENV PORT=8080
+ENV LISTEN_ADDRESS=0.0.0.0:8080
+
 # ---- Runtime ----
-CMD ["PORT=8080", "LISTEN_ADDRESS=0.0.0.0:8080", "python", "./service/main.py"]
+CMD ["python", "./service/main.py"]
