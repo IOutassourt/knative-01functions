@@ -35,7 +35,7 @@ RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
 # ---- Function build ----
-FROM ghcr.io/knative/func:latest
+FROM ghcr.io/knative/func:v1.20.0
 RUN func build --builder=pack --image leradicator/ce-function:kn --builder-image=heroku/builder:24 --verbose
 
 EXPOSE 8080
