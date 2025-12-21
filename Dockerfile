@@ -39,4 +39,4 @@ USER appuser
 EXPOSE 8080
 
 # ---- Runtime ----
-CMD ["python", "-m", "app"]
+CMD ["PORT=8080", "LISTEN_ADDRESS=0.0.0.0:8080", "python", "./service/main.py"]

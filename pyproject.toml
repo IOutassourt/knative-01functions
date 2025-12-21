@@ -28,6 +28,9 @@ build-backend = "setuptools.build_meta"
 asyncio_mode = "strict"
 asyncio_default_fixture_loop_scope = "function"
 
+[tool.setuptools.packages.find]
+include = ["function*"]
+
 #[tool.uv.workspace]
 #members = [
 #    "function",
