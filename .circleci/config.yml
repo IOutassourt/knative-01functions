@@ -116,4 +116,4 @@ workflows:
     jobs:
       - pack/build:
           image-name: cefunctions
-          builder: 'paketobuildpacks/builder:base'
+          builder: s2i
