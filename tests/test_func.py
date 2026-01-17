@@ -21,8 +21,8 @@ async def test_func():
     # A test CloudEvent
     attributes = {
         "id": "test-id",
-        "type": "com.example.test1",
-        "source": "https://example.com/event-producer",
+        "type": "com.example.test",
+        "source": "https://test.example.com/event-producer",
     }
     data = {"message": "test message"}
     event = CloudEvent(attributes, data)

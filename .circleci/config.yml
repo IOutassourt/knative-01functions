@@ -25,10 +25,40 @@ jobs:
     steps:
       - checkout
 
-      - python/install-packages:
-          pkg-manager: pip
-          pip-dependency-file: requirements.txt
+      # Install uv
+      - run:
+          name: Install uv
+          command: |
+            curl -LsSf https://astral.sh/uv/install.sh | sh
+            echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> $BASH_ENV
 
+      # Restore uv cache (very important for speed)
+      - restore_cache:
+          keys:
+            - uv-cache-{{ checksum "uv.lock" }}
+            - uv-cache-
+
+      # Install Python (optional but recommended)
+      - run:
+          name: Ensure Python version
+          command: |
+            uv python install 3.12
+            uv python pin 3.12
+
+      # Sync dependencies
+      - run:
+          name: Install dependencies
+          command: |
+            uv sync --dev
+
+      # Save cache
+      - save_cache:
+          key: uv-cache-{{ checksum "uv.lock" }}
+          paths:
+            - ~/.cache/uv
+            - .venv
+
+      # Run tests
       - run:
           name: Run unit tests
           command: |
