@@ -60,13 +60,9 @@ jobs:
 
       # Run tests
       - run:
-          name: Run unit tests
+          name: Run tests
           command: |
-            if [ -d tests ]; then
-              pytest -v
-            else
-              echo "No tests directory, skipping"
-            fi
+            uv run pytest
 
   build-and-push:
     docker:
