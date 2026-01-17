@@ -41,7 +41,7 @@ async def test_func():
         assert isinstance(e, CloudEvent), f"Expected CloudEvent, got {type(e)}"
 
         # Ensure it echoes the data sent
-        assert e.data == recv, f"Expected data {data}, got {e.data}"
+        assert e.data == data, f"Expected data {data}, got {e.data}"
 
     # Invoke the Function
     scope = {"event": event}  # Add the CloudEvent to the scope

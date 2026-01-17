@@ -11,7 +11,7 @@ def new():
     return Function()
 
 LOAD_CONVERTER = os.getenv('LOAD_CONVERTER')
-LOAD_CONVERTER = "yaml to json"
+LOAD_CONVERTER = "just echo"
 
 
 class Function:
