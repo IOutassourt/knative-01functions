@@ -25,6 +25,7 @@ async def test_func():
         "source": "https://test.example.com/event-producer",
     }
     data = {"message": "test message"}
+    recv = {"task": "send event as type $type and hash $hash from $id-ask-$hash from headers to obtain the results"}
     event = CloudEvent(attributes, data)
 
     invoked = False  # Flag indicating send method was invoked
@@ -40,9 +41,7 @@ async def test_func():
         assert isinstance(e, CloudEvent), f"Expected CloudEvent, got {type(e)}"
 
         # Ensure it echoes the data sent
-        assert e.data == {
-                'task': 'send event as type $type and hash $hash from $id-ask-$hash from headers to obtain the results'
-                }, f"Expected data {data}, got {e.data}"
+        assert e.data == recv, f"Expected data {data}, got {e.data}"
 
     # Invoke the Function
     scope = {"event": event}  # Add the CloudEvent to the scope
